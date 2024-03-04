@@ -1,0 +1,42 @@
+postgres=# CREATE DATABASE bd_aula03;
+CREATE DATABASE
+postgres=# \C
+Title is unset.
+postgres=# \c
+You are now connected to database "postgres" as user "postgres".
+postgres=# \c bd_aula03;
+You are now connected to database "bd_aula03" as user "postgres".
+bd_aula03=# CREATE TABLE tbl_cliente (codigo_cliente INTEGER PRIMARY KEY,nome TEXT NOT NULL, cidade TEXT, endereco TEXT)/
+bd_aula03-# CREATE TABLE tbl_cliente (codigo_cliente INTEGER PRIMARY KEY,nome TEXT NOT NULL, cidade TEXT, endereco TEXT);
+ERRO:  erro de sintaxe em ou próximo a "/"
+LINE 1: ...PRIMARY KEY,nome TEXT NOT NULL, cidade TEXT, endereco TEXT)/
+                                                                      ^
+bd_aula03=# CREATE TABLE tbl_cliente (codigo_cliente INTEGER PRIMARY KEY,nome TEXT NOT NULL, cidade TEXT, endereco TEXT);
+CREATE TABLE
+bd_aula03=# CREATE TABLE tbl_titulo (codigo_titulo INTEGER PRIMARY KEY, titulo TEXT NOT NULL, descricao TEXT, categoria TEXT);
+CREATE TABLE
+bd_aula03=# CREATE TABLE tbl_emprestimo(numero_emprestimo INTEGER PRIMARY KEY, codigo_cliente INTEGER, codigo_livro INTEGER);
+CREATE TABLE
+bd_aula03=# CREATE TABLE tbl_livros(cod_livro INTEGER PRIMARY KEY, codigo_titulo INTEGER, status TEXT);
+CREATE TABLE
+bd_aula03=# CREATE DOMAIN chk_categoria TEXT CHECK (VALUE IN('DRAMA','COMEDIA'));
+CREATE DOMAIN
+bd_aula03=# CREATE DOMAIN chk_status TEXT CHECK (VALUE IN('DISPONIVEL','ALUGADO'));
+CREATE DOMAIN
+bd_aula03=# ALTER TABLE tbl_titulo ALTER categoria type chk_categoria;
+ALTER TABLE
+bd_aula03=# ALTER TABLE tbl_livros ALTER status type chk_status;
+ALTER TABLE
+bd_aula03=# ALTER TABLE tbl_livros ADD CONSTRAINT fk_codigo_titulo FOREIGN KEY(codigo_titulo) REFERENCES tbl_titulo(codigo_titulo);
+ALTER TABLE
+bd_aula03=# ALTER TABLE tbl_emprestimo ADD CONSTRAINT fk_codigo_cliente FOREIGN KEY(codigo_cliente) REFERENCES tbl_cliente(codigo_cliente);
+ALTER TABLE
+bd_aula03=# ALTER TABLE tbl_emprestimo ADD CONSTRAINT fk_cod_livro FOREIGN KEY(cod_livro) REFERENCES tbl_livros(cod_livro);
+ERRO:  coluna "cod_livro" referenciada na restrição de chave estrangeira não existe
+bd_aula03=# ALTER TABLE tbl_emprestimo ADD CONSTRAINT fk_codigo_livro FOREIGN KEY(cod_livro) REFERENCES tbl_livros(cod_livro);
+ERRO:  coluna "cod_livro" referenciada na restrição de chave estrangeira não existe
+bd_aula03=# ALTER TABLE tbl_emprestimo ADD CONSTRAINT fk_cod_livro FOREIGN KEY(codigo_livro) REFERENCES tbl_livros(cod_livro);
+ALTER TABLE
+bd_aula03=# ALTER TABLE tbl_livros ALTER COLUMN status SET DEFAULT 'DISPONIVEL';
+ALTER TABLE
+

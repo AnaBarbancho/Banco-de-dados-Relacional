@@ -1,0 +1,62 @@
+
+bd_aula03=# INSERT INTO tbl_cliente (codigo_cliente, nome, cidade, endereco) VALUES(1,'Joao Silva', 'Sao Paulo', 'Rua A 123');
+INSERT 0 1
+bd_aula03=# INSERT INTO tbl_cliente (codigo_cliente, nome, cidade, endereco) VALUES(1,'Joao Silva', 'Sao Paulo', 'Rua A 123');
+bd_aula03=# INSERT INTO tbl_cliente (codigo_cliente, nome, cidade, endereco) VALUES(2,'Maria Santos', 'Rio de Janeiro', 'Rua B 456'), (3,'Pedro Almeida','Belo Horizonte', 'Rua C 789'), (4,'Ana Oliveira', 'Salvador','Av D 1011'), (5,'Carlos Lima', 'Brasilia','Rua E 1213');
+INSERT 0 4
+
+
+bd_aula03=# INSERT INTO tbl_titulo (codigo_titulo, titulo, descricao, categoria) VALUES(1,'Aventuras Urbanas','Uma historia emocionante','DRAMA'), (2,'Misterios Antigos','Enigmas para resolver','COMEDIA'),(3,'Amor nas estrelas','Um romance intergalatico','DRAMA'), (4,'Codigo Enigmatico','Segredos Ocultos', 'COMEDIA'),(5,'Historias perdidas', 'Contos esquecidos','DRAMA');
+INSERT 0 5
+bd_aula03=# INSERT INTO tbl_livros (codigo_livro, codigo_titulo, status) VALUES (1,1,'DISPONIVEL'),(2,1,'ALUGADO'), (3,2,'DISPONIVEL'),(4,3,'ALUGADO'), (5,4,'DISPONIVEL');
+ERRO:  coluna "codigo_livro" da relação "tbl_livros" não existe
+LINE 1: INSERT INTO tbl_livros (codigo_livro, codigo_titulo, status)...
+                                ^
+bd_aula03=# INSERT INTO tbl_livros (cod_livro, codigo_titulo, status) VALUES (1,1,'DISPONIVEL'),(2,1,'ALUGADO'), (3,2,'DISPONIVEL'),(4,3,'ALUGADO'), (5,4,'DISPONIVEL');
+INSERT 0 5
+bd_aula03=# INSERT INTO tbl_emprestimo (numero_emprestimo, codigo_cliente, codigo_livro) VALUES (1,1,2),(2,2,4),(3,3,1),(4,4,5),(5,5,3);
+INSERT 0 5
+
+
+
+--selecionar todos os clientes
+bd_aula03=# SELECT nome FROM tbl_cliente;
+     nome
+---------------
+ Joao Silva
+ Maria Santos
+ Pedro Almeida
+ Ana Oliveira
+ Carlos Lima
+(5 rows)
+
+--selecionar todos os clientes que moram em Sao Paulo
+bd_aula03=# SELECT nome
+bd_aula03-# FROM tbl_cliente
+bd_aula03-# WHERE cidade = 'Sao Paulo';
+    nome
+------------
+ Joao Silva
+(1 row)
+
+--Selecionar todos os clientes em que o codigo sao maior que 3
+
+bd_aula03=# SELECT nome FROM tbl_cliente WHERE codigo_cliente > 3;
+     nome
+--------------
+ Ana Oliveira
+ Carlos Lima
+(2 rows)
+--selecionar todos os titulos
+bd_aula03=# SELECT titulo FROM tbl_titulo;
+       titulo
+--------------------
+ Aventuras Urbanas
+ Misterios Antigos
+ Amor nas estrelas
+ Codigo Enigmatico
+ Historias perdidas
+(5 rows)
+
+
+

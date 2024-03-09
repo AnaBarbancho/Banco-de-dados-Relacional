@@ -57,6 +57,7 @@ bd_aula03=# SELECT titulo FROM tbl_titulo;
  Codigo Enigmatico
  Historias perdidas
 (5 rows)
-
-
-
+ CREATE TABLE tbl_clientes2(codigo INTEGER);
+INSERT INTO tbl_clientes2(codigo) SELECT codigo_cliente FROM tbl_cliente;
+ UPDATE tbl_livros SET status = 'DISPONIVEL' WHERE status = 'ALUGADO';
+ DELETE FROM tbl_clientes2 WHERE codigo > 3;

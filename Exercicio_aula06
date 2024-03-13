@@ -18,4 +18,8 @@ bd_aula06=# SELECT t.titulo,t.descricao,l.status FROM tbl_titulo t INNER JOIN tb
  Código Enigmatico | Segredos ocultos          | ALUGADO
 (4 rows)
 
-
+SELECT t.nome, n.codigo_livro, e.status FROM tbl_cliente as t LEFT JOIN tbl_emprestimo as n ON t.codigo_cliente=n.codigo_cliente LEFT JOIN tbl_livros as e ON e.cod_livro=n.codigo_livro WHERE status is NULL;
+    nome     | codigo_livro | status
+-------------+--------------+--------
+ Carlos Lima |              |
+(1 row)

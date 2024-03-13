@@ -1,1 +1,19 @@
+bd_aula06=# SELECT t.titulo, l.status FROM tbl_titulo t LEFT JOIN tbl_livros l ON t.codigo_titulo = l.codigo_titulo;
+       titulo       |   status
+--------------------+------------
+ Aventuras Urbanas  | ALUGADO
+ Aventuras Urbanas  | ALUGADO
+ Mistérios Antigos  | DISPONIVEL
+ Amor nas Estrelas  | ALUGADO
+ Código Enigmatico  | ALUGADO
+ Histórias Perdidas |
+(6 rows)
 
+bd_aula06=# SELECT t.titulo,t.descricao,l.status FROM tbl_titulo t INNER JOIN tbl_livros l ON t.codigo_titulo = l.codigo_titulo WHERE status = 'ALUGADO';
+      titulo       |         descricao         | status
+-------------------+---------------------------+---------
+ Aventuras Urbanas | Uma história emocionante  | ALUGADO
+ Aventuras Urbanas | Uma história emocionante  | ALUGADO
+ Amor nas Estrelas | Um romance intergaláctico | ALUGADO
+ Código Enigmatico | Segredos ocultos          | ALUGADO
+(4 rows)

@@ -23,3 +23,24 @@ SELECT t.nome, n.codigo_livro, e.status FROM tbl_cliente as t LEFT JOIN tbl_empr
 -------------+--------------+--------
  Carlos Lima |              |
 (1 row)
+
+bd_aula06=# SELECT t.titulo, t.categoria, l.status FROM tbl_titulo t INNER JOIN tbl_livros l ON t.codigo_titulo = l.codigo_titulo WHERE status = 'DISPONIVEL';
+      titulo       | categoria |   status
+-------------------+-----------+------------
+ Mistérios Antigos | COMEDIA   | DISPONIVEL
+(1 row)
+bd_aula06=# SELECT nome, titulo FROM tbl_cliente a FULL JOIN tbl_emprestimo b ON a.codigo_cliente=b.codigo_cliente LEFT JOIN tbl_livros c ON c.cod_livro=b.codigo_livro LEFT JOIN tbl_titulo d ON d.codigo_titulo=c.codigo_titulo;        
+     nome      |      titulo
+---------------+-------------------
+ Joao Silva    | Aventuras Urbanas
+ Maria Santos  | Amor nas Estrelas
+ Pedro Almeida | Aventuras Urbanas
+ Ana Oliveira  | Código Enigmatico
+ Carlos Lima   |
+(5 rows)
+
+bd_aula06=# SELECT nome,titulo,status FROM tbl_cliente a FULL JOIN tbl_emprestimo b ON a.codigo_cliente=b.codigo_cliente LEFT JOIN tbl_livros c ON c.cod_livro=b.codigo_livro LEFT JOIN tbl_titulo d ON d.codigo_titulo=c.codigo_titulo WHERE nome = 'Ana Oliveira';
+     nome     |      titulo       | status
+--------------+-------------------+---------
+ Ana Oliveira | Código Enigmatico | ALUGADO
+(1 row)

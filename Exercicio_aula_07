@@ -1,0 +1,1 @@
+SELECT UPPER(l.nome),LOWER(t.nome) FROM tbl_fornecedor l JOIN tbl_peca t ON l.cidade=t.cidade ORDER BY l.nome,t.nome;

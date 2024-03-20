@@ -1,1 +1,7 @@
 SELECT UPPER(l.nome),LOWER(t.nome) FROM tbl_fornecedor l JOIN tbl_peca t ON l.cidade=t.cidade ORDER BY l.nome,t.nome;
+
+bd_aula07=# SELECT distinct(cidade) FROM tbl_fornecedor;
+
+bd_aula07=# SELECT nome p, cor p FROM tbl_peca p JOIN tbl_estoque c ON p.cod_peca=c.cod_compra WHERE cod_fornecedor=3 ORDER BY nome;
+
+bd_aula07=# SELECT nome , cidade FROM tbl_fornecedor f JOIN tbl_estoque e ON f.cod_fornecedor=e.cod_compra WHERE cod_peca = 1 AND quantidade >10;

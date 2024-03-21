@@ -5,3 +5,14 @@ bd_aula07=# SELECT distinct(cidade) FROM tbl_fornecedor;
 bd_aula07=# SELECT nome p, cor p FROM tbl_peca p JOIN tbl_estoque c ON p.cod_peca=c.cod_compra WHERE cod_fornecedor=3 ORDER BY nome;
 
 bd_aula07=# SELECT nome , cidade FROM tbl_fornecedor f JOIN tbl_estoque e ON f.cod_fornecedor=e.cod_compra WHERE cod_peca = 1 AND quantidade >10;
+
+bd_aula07=# SELECT sum(quantidade) FROM tbl_estoque WHERE cod_peca = 1;
+
+bd_aula07=# SELECT max(preco), min(preco) FROM tbl_peca;
+
+bd_aula07=# SELECT count(quantidade) from tbl_estoque;
+
+bd_aula07=# SELECT distinct(count(cidade)) from tbl_peca;
+
+bd_aula07=# SELECT ROUND(avg(preco),1) FROM tbl_peca;
+

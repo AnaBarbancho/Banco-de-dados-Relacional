@@ -1,0 +1,3 @@
+bd_aula07=# SELECT f.nome,f.cidade FROM tbl_fornecedor f INNER JOIN tbl_estoque e ON f.cod_fornecedor=e.cod_fornecedor WHERE e.quantidade > 10 AND e.cod_peca = 1;
+
+SELECT nome FROM tbl_peca WHERE cod_peca WHERE cod_peca IS NOT NULL AND preco > 10;

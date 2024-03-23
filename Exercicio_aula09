@@ -1,0 +1,9 @@
+bd_aula07=# SELECT p.nome, sum(n.quantidade) FROM tbl_peca p JOIN tbl_estoque n ON p.cod_peca=n.cod_peca GROUP BY p.nome;
+
+bd_aula07=# SELECT p.nome, sum(n.quantidade) FROM tbl_peca p JOIN tbl_estoque n ON p.cod_peca=n.cod_peca GROUP BY p.nome HAVING sum(n.quantidade) >20;
+
+bd_aula07=# SELECT cidade, count(cod_fornecedor) FROM tbl_fornecedor GROUP BY cidade;
+
+bd_aula07=# SELECT cor, count(cor) FROM tbl_peca GROUP BY cor;
+
+bd_aula07=# SELECT cor, count(cor) FROM tbl_peca GROUP BY cor HAVING count(cor) > 1;

@@ -1,0 +1,10 @@
+-- exercicio 1
+CREATE VIEW v_depcidade (cidade,nome) AS SELECT c.nome,d.nome FROM tbl_cidades c JOIN tbl_departamentos d ON c.cod_cidade=d.cod_departamento;
+SELECT * FROM v_depcidade;
+
+--exercicio 2
+ Select nome, cidade FROM v_depcidade WHERE cidade = 'Houston';
+      nome      | cidade
+----------------+---------
+ Departamento 4 | Houston
+(1 row)

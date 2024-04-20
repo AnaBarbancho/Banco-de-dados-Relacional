@@ -8,3 +8,11 @@ SELECT * FROM v_depcidade;
 ----------------+---------
  Departamento 4 | Houston
 (1 row)
+
+--exercicio 3
+CREATE VIEW v_opsalario AS Select sum(salario) as soma , avg(salario) as media From tbl_empregados;
+ SELECT * FROM v_opsalario;
+  soma  | media
+--------+--------
+ 212300 | 5307.5
+(1 row)

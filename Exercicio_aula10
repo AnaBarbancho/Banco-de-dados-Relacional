@@ -3,16 +3,45 @@ CREATE VIEW v_depcidade (cidade,nome) AS select t.nome, p.nome FROM tbl_departam
 SELECT * FROM v_depcidade;
 
 --exercicio 2
- Select nome, cidade FROM v_depcidade WHERE cidade = 'Houston';
-      nome      | cidade
-----------------+---------
- Departamento 4 | Houston
-(1 row)
+CREATE VIEW v_depcidadehouston (cidade,nome) AS SELECT cidade, nome FROM v_depcidade WHERE nome = 'Houston';
+SELECT * FROM v_depcidadehouston;
 
 --exercicio 3
 CREATE VIEW v_opsalario AS Select sum(salario) as soma , avg(salario) as media From tbl_empregados;
  SELECT * FROM v_opsalario;
-  soma  | media
---------+--------
- 212300 | 5307.5
-(1 row)
+
+--exercicio 4
+CREATE VIEW vw_empregados_salarial AS SELECT nome,salario FROM tbl_empregados WHERE salario > 5500;
+bd_aula=# SELECT * FROM vw_empregados_salarial;
+
+--exercicio 5
+CREATE VIEW v_departemp AS SELECT d.nome,count(e.cod_empregado) AS quantidade FROM tbl_departamentos d LEFT JOIN tbl_empregados e ON d.cod_departamento=e.cod_departamento GROUP BY d.nome ORDER BY quantidade DESC;
+
+--exercicio 6
+CREATE VIEW v_departrouble AS
+SELECT d.nome AS nome_departamento
+FROM tbl_departamentos d
+LEFT JOIN (
+    SELECT cod_departamento, COUNT(*) AS num_projetos
+    FROM tbl_projetos
+    GROUP BY cod_departamento
+) p ON d.cod_departamento = p.cod_departamento
+LEFT JOIN (
+    SELECT cod_departamento, COUNT(*) AS num_empregados
+    FROM tbl_empregados
+    GROUP BY cod_departamento
+) e ON d.cod_departamento = e.cod_departamento
+WHERE p.num_projetos > COALESCE(e.num_empregados, 0);CREATE VIEW v_departrouble AS
+SELECT d.nome AS nome_departamento
+FROM tbl_departamentos d
+LEFT JOIN (
+    SELECT cod_departamento, COUNT(*) AS num_projetos
+    FROM tbl_projetos
+    GROUP BY cod_departamento
+) p ON d.cod_departamento = p.cod_departamento
+LEFT JOIN (
+    SELECT cod_departamento, COUNT(*) AS num_empregados
+    FROM tbl_empregados
+    GROUP BY cod_departamento
+) e ON d.cod_departamento = e.cod_departamento
+WHERE p.num_projetos > COALESCE(e.num_empregados, 0);

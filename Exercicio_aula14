@@ -1,0 +1,80 @@
+-- Exercicio 1
+CREATE OR REPLACE FUNCTION atualizar_qtd_projetos()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'DELETE' THEN
+        UPDATE tbl_departamentos
+        SET qtd_projetos = qtd_projetos - 1
+        WHERE cod_departamento = OLD.cod_departamento;
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trig_atualizar_qtd_projetos
+AFTER DELETE ON tbl_projetos
+FOR EACH ROW
+EXECUTE FUNCTION atualizar_qtd_projetos();
+
+--Exercicio 2
+CREATE OR REPLACE FUNCTION atualizar_qtd_projetos()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        UPDATE tbl_departamentos
+        SET qtd_projetos = qtd_projetos + 1
+        WHERE cod_departamento = NEW.cod_departamento;
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trig_atualizar_qtd_projetos
+AFTER INSERT ON tbl_projetos
+FOR EACH ROW
+EXECUTE FUNCTION atualizar_qtd_projetos();
+
+
+--Exercicio 3
+CREATE TABLE tbl_empregado_historico_salario (
+    cod_empregado INT,
+    salario REAL,
+    data TIMESTAMP DEFAULT NOW()
+);
+
+-- 3 b) Criar a trigger para salvar o salário atual de um empregado
+CREATE OR REPLACE FUNCTION salvar_salario_atual()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Insere o salário atual do empregado na tabela tbl_empregado_historico_salario
+    INSERT INTO tbl_empregado_historico_salario (cod_empregado, salario)
+    VALUES (NEW.cod_empregado, NEW.salario);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trig_salvar_salario_atual
+AFTER UPDATE OF salario ON tbl_empregados
+FOR EACH ROW
+EXECUTE FUNCTION salvar_salario_atual();
+
+
+--Exercício 4 
+-- 4 a) Adicionar a coluna data_atualizacao na tabela tbl_empregados
+ALTER TABLE tbl_empregados
+ADD COLUMN data_atualizacao TIMESTAMP;
+
+-- 4 b) Criar a trigger para atualizar a data de atualização
+CREATE OR REPLACE FUNCTION atualizar_data_atualizacao()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Atualizar a data_atualizacao para a data e hora atuais
+    NEW.data_atualizacao := NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trig_atualizar_data_atualizacao
+BEFORE UPDATE ON tbl_empregados
+FOR EACH ROW
+EXECUTE FUNCTION atualizar_data_atualizacao();

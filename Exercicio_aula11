@@ -1,0 +1,67 @@
+--Exercicio 1
+CREATE OR REPLACE PROCEDURE proc_upd_nome_depart(
+    IN p_cod_departamento INT,
+    IN p_novo_nome TEXT
+)
+LANGUAGE SQL
+AS $$
+UPDATE tbl_departamentos
+SET nome = p_novo_nome
+WHERE cod_departamento = p_cod_departamento;
+$$;
+
+
+--Exercicio 2
+
+
+
+--Exercicio 3
+CREATE OR REPLACE PROCEDURE proc_novoprojeto(
+    IN p_nome_projeto TEXT,
+    IN p_cod_departamento INT
+)
+LANGUAGE SQL
+AS $$
+INSERT INTO tbl_projetos (nome, cod_departamento)
+VALUES (p_nome_projeto, p_cod_departamento);
+$$;
+
+
+
+
+--Exercicio 4
+CREATE OR REPLACE PROCEDURE proc_delprojeto(
+    IN p_cod_projeto INT
+)
+LANGUAGE SQL
+AS $$
+BEGIN
+    DELETE FROM tbl_projetos
+    WHERE cod_projeto = p_cod_projeto;
+END;
+$$;
+
+
+
+--Exercicio 5
+CREATE OR REPLACE PROCEDURE proc_projeto_arquivado(
+    IN p_cod_projeto INT
+)
+LANGUAGE SQL
+AS $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'tbl_projetos_arquivados') THEN
+        CREATE TABLE tbl_projetos_arquivados (
+            codigo_projeto INT,
+            nome TEXT
+        );
+    END IF;
+    INSERT INTO tbl_projetos_arquivados (codigo_projeto, nome)
+    SELECT cod_projeto, nome
+    FROM tbl_projetos
+    WHERE cod_projeto = p_cod_projeto;
+
+    DELETE FROM tbl_projetos
+    WHERE cod_projeto = p_cod_projeto;
+END;
+$$;

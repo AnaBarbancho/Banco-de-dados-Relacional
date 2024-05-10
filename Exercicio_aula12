@@ -1,106 +1,92 @@
 --Exercicio 1
-CREATE OR REPLACE FUNCTION fc_soma(
-    a INT,
-    b INT
-)
-RETURNS INT AS $$
+CREATE FUNCTION fc_soma(a INT, b INT)
+RETURNS INT 
+LANGUAGE plpgslq AS 
+$$
 DECLARE
     resultado INT;
 BEGIN
     resultado := a + b;
     RETURN resultado;
-END;
-$$ LANGUAGE plpgsql;
+END 
+$$;
+
 
 --Exercicio 2
-CREATE OR REPLACE FUNCTION fc_maior_salario()
-RETURNS TEXT AS $$
+CREATE FUNCTION fc_maior_salario()
+RETURNS TEXT
+LANGUAGE plpgsql AS
+$$
 DECLARE
     maior_salario REAL;
     nome_empregado TEXT;
 BEGIN
-    -- Encontrar o maior salário
-    SELECT MAX(salario) INTO maior_salario FROM tbl_empregados;
-
-    -- Encontrar o nome do empregado com o maior salário
-    SELECT nome INTO nome_empregado
-    FROM tbl_empregados
-    WHERE salario = maior_salario
-    LIMIT 1;
-
+    SELECT salario INTO maior_salario FROM tbl_empregados ORDER BY salario DESC LIMIT 1;
+    SELECT nome INTO nome_empregado FROM tbl_empregados WHERE salario = maior_salario LIMIT 1;
     RETURN nome_empregado;
-END;
-$$ LANGUAGE plpgsql;
+END
+$$;
 
 
 --Exercicio 3 
-CREATE OR REPLACE FUNCTION fc_media_salario()
-RETURNS REAL AS $$
+CREATE FUNCTION fc_media_salario()
+RETURNS REAL 
+LANGUAGE plpgsql AS 
+$$
 DECLARE
     media_salario REAL;
 BEGIN
-    -- Calcula a média dos salários
     SELECT AVG(salario) INTO media_salario FROM tbl_empregados;
-    
     RETURN media_salario;
-END;
-$$ LANGUAGE plpgsql;
+END
+$$;
+
+
 
 --Exercicio 4
-CREATE OR REPLACE FUNCTION fc_salarios(
-    codigo_empregado INT
-)
+CREATE FUNCTION fc_salarios(codigo_empregado INT)
 RETURNS TABLE (
     salario_original REAL,
     salario_acrescido REAL,
     salario_reduzido REAL
-) AS $$
+)
+LANGUAGE plpgsql AS 
+$$
 DECLARE
     salario_empregado REAL;
 BEGIN
-    -- Busca o salário do empregado com o código fornecido
     SELECT salario INTO salario_empregado
     FROM tbl_empregados
     WHERE cod_empregado = codigo_empregado;
-
-    -- Calcula o salário acrescido de 10%
     salario_acrescido := salario_empregado * 1.10;
-
-    -- Calcula o salário reduzido em 15%
     salario_reduzido := salario_empregado * 0.85;
-
     RETURN QUERY
     SELECT salario_empregado, salario_acrescido, salario_reduzido;
-END;
-$$ LANGUAGE plpgsql;
+END
+$$ ;
 
 --Exercicio 5
-CREATE OR REPLACE FUNCTION fc_projetos()
-RETURNS TABLE (
-    cod_projeto INT,
-    nome_projeto TEXT
-) AS $$
+CREATE FUNCTION fc_projetos()
+RETURNS TABLE (cod_projeto INT,nome_projeto TEXT)
+LANGUAGE plpgsql AS 
+$$
 BEGIN
     RETURN QUERY
     SELECT cod_projeto, nome
     FROM tbl_projetos;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 
 --Exercicio 6
-CREATE OR REPLACE FUNCTION fc_proj_departmento(
-    cod_departamento INT
-)
-RETURNS INT AS $$
+CREATE FUNCTION fc_proj_departmento(cod_departamento INT)
+RETURNS INT
+LANGUAGE plpgsql AS 
+$$
 DECLARE
     qtd_projetos INT;
 BEGIN
-    SELECT COUNT(*)
-    INTO qtd_projetos
-    FROM tbl_projetos
-    WHERE cod_departamento = cod_departamento;
-
+    SELECT COUNT(*) INTO qtd_projetos FROM tbl_projetos WHERE cod_departamento = cod_departamento;
     RETURN qtd_projetos;
-END;
-$$ LANGUAGE plpgsql;
+END
+$$;
